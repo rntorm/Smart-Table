@@ -6,23 +6,25 @@ ng.module('smart-table')
         scope: {
             row: '=csSelect',
             master: '=',
-            rowCollection: '='
+            rowCollection: '=',
+            masterSelected: '='
         },
         link: function (scope, element, attr, ctrl) {
-        	scope.allSelected = false; // initial status. Used to ignore errors if some of the rows are changed before all select is used.
+        	ctrl.tableState().allSelected = false; // initial status. Used to ignore errors if some of the rows are changed before all select is used.
             element.bind('change', function (evt) {
-                scope.$apply(function () {
+                // scope.$apply(function () {
                     ctrl.select(scope.row, 'multiple');
                     if(scope.master === true) {
-                    	ctrl.selectMaster(scope.rowCollection);
                     	angular.forEach(scope.rowCollection, function(row) {
-                    	    if(!row.isSelected || scope.allSelected){
+                    	    if(!row.isSelected || scope.masterSelected){
                     			ctrl.select(row, 'multiple');
                     		}
                     	});
                     	scope.allSelected = !scope.allSelected;
+                    	console.log(scope.rowCollection);
                     }
-                });
+                    scope.$apply();
+                // });
             });
 
             scope.$watch('row.isSelected', function (newValue, oldValue) {

@@ -12,12 +12,12 @@ ng.module('smart-table')
             search: {},
             pagination: {
                 start: 0
-            }
+            },
+            isSelected: true
         };
         var pipeAfterSafeCopy = true;
         var ctrl = this;
         var lastSelected;
-
         function copyRefs(src) {
             return [].concat(src);
         }
